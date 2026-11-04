@@ -1,0 +1,7 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "macle-taro-sample",
+  "description": "Taro React Sample for Macle Mini Program",
+  "appid": "touristappid",
+  "compileType": "miniprogram"
+}

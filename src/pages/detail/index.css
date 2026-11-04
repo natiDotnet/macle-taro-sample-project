@@ -1,0 +1,33 @@
+.detail-container {
+  padding: 30rpx;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 40rpx 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1f2329;
+  margin-bottom: 16rpx;
+}
+
+.desc {
+  display: block;
+  font-size: 28rpx;
+  color: #646a73;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+.btn-primary {
+  background-color: #07c160;
+  color: #ffffff;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+}
