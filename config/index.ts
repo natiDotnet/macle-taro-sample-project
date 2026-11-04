@@ -16,7 +16,12 @@ export default defineConfig(async (merge) => {
     outputRoot: 'dist',
     plugins: [
       '@tarojs/plugin-framework-react',
-      path.resolve(__dirname, '../../plugin-platform-macle')
+      [
+        path.resolve(__dirname, '../../plugin-platform-macle'),
+        {
+          tailwindcss: true
+        }
+      ]
     ],
     framework: 'react',
     compiler: 'webpack5',

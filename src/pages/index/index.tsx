@@ -5,8 +5,9 @@ import './index.css'
 
 export default function IndexPage() {
   const [count, setCount] = useState<number>(0)
-  const [inputText, setInputText] = useState<string>('Hello Macle')
+  const [inputText, setInputText] = useState<string>('Hello Macle with Tailwind!')
   const [systemInfo, setSystemInfo] = useState<string>('')
+  const [selectedTag, setSelectedTag] = useState<string>('Tailwind')
 
   // Toast test
   const handleShowToast = () => {
@@ -54,61 +55,100 @@ export default function IndexPage() {
   // Navigation test
   const handleNavigate = () => {
     Taro.navigateTo({
-      url: '/pages/detail/index'
+      url: '/pages/detail/index?id=MACLE-2026&title=Taro%20Detail%20Showcase&source=IndexPage'
     })
   }
 
+  const tags = ['Tailwind', 'React 18', 'Taro 4', 'Macle Engine', 'TypeScript']
+
   return (
-    <View className="index-container">
-      <View className="header-card">
-        <Text className="title">Macle × Taro 4</Text>
-        <Text className="subtitle">React Reconciler + Macle Native Runtime</Text>
+    <View className="p-4 bg-gray-50 min-h-screen">
+      {/* Tailwind Banner Card */}
+      <View className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl p-5 mb-4 shadow-lg text-white">
+        <Text className="text-2xl font-black block tracking-wide">Macle × Tailwind CSS</Text>
+        <Text className="text-sm opacity-90 block mt-1">Utility-First CSS compiled seamlessly for Macle Mini Programs</Text>
+        <View className="flex flex-row flex-wrap gap-2 mt-3">
+          {tags.map((tag) => (
+            <View
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
+              className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                selectedTag === tag ? 'bg-white text-blue-700 shadow-sm' : 'bg-white/20 text-white'
+              }`}
+            >
+              <Text>{tag}</Text>
+            </View>
+          ))}
+        </View>
       </View>
 
-      {/* Counter Section (Demonstrates React Virtual DOM -> setData Bridge) */}
-      <View className="card">
-        <Text className="card-title">1. Reactive State & Virtual DOM</Text>
-        <Text className="card-desc">Clicking modifies React state, Taro diffs the tree, and calls Macle's setData.</Text>
-        <View className="counter-row">
-          <Text className="counter-text">Counter: {count}</Text>
-          <Button className="btn btn-primary" onClick={() => setCount(c => c + 1)}>
+      {/* Reactive State & Counter */}
+      <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
+        <Text className="text-base font-bold text-gray-800 block mb-1">1. Reactive State & Virtual DOM</Text>
+        <Text className="text-xs text-gray-500 block mb-3">State mutations trigger Taro diffing & Macle setData.</Text>
+        <View className="flex flex-row items-center justify-between bg-blue-50/60 p-3 rounded-lg">
+          <Text className="text-lg font-bold text-blue-800">Count: {count}</Text>
+          <Button
+            className="m-0 px-4 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-lg active:opacity-80"
+            onClick={() => setCount((c) => c + 1)}
+          >
             Increment (+1)
           </Button>
         </View>
       </View>
 
-      {/* Input Binding Section */}
-      <View className="card">
-        <Text className="card-title">2. Input Two-Way Binding</Text>
+      {/* Two-Way Binding */}
+      <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
+        <Text className="text-base font-bold text-gray-800 block mb-1">2. Two-Way Input Binding</Text>
         <Input
-          className="text-input"
+          className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 mb-2 focus:border-blue-500"
           value={inputText}
           onInput={(e) => setInputText(e.detail.value)}
-          placeholder="Type something..."
+          placeholder="Type here..."
         />
-        <Text className="input-preview">Live Value: {inputText}</Text>
+        <View className="bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg">
+          <Text className="text-xs text-emerald-800 font-mono">Live Value: {inputText}</Text>
+        </View>
       </View>
 
-      {/* Native APIs Section */}
-      <View className="card">
-        <Text className="card-title">3. Native Macle APIs (ma.* Bridge)</Text>
-        <Button className="btn btn-action" onClick={handleShowToast}>
-          Test Taro.showToast()
-        </Button>
-        <Button className="btn btn-action" onClick={handleGetSystemInfo}>
-          Test Taro.getSystemInfo()
-        </Button>
-        <Text className="sys-info">{systemInfo || 'System Info: Not fetched yet'}</Text>
-        <Button className="btn btn-warning" onClick={handleTradePay}>
-          Test Macle ma.tradePay()
-        </Button>
+      {/* Native APIs */}
+      <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
+        <Text className="text-base font-bold text-gray-800 block mb-2">3. Native Macle APIs (ma.* Bridge)</Text>
+        <View className="flex flex-col gap-2">
+          <Button
+            className="w-full m-0 py-2 text-sm font-medium bg-slate-800 text-white rounded-lg active:opacity-80"
+            onClick={handleShowToast}
+          >
+            Test Taro.showToast()
+          </Button>
+          <Button
+            className="w-full m-0 py-2 text-sm font-medium bg-slate-800 text-white rounded-lg active:opacity-80"
+            onClick={handleGetSystemInfo}
+          >
+            Test Taro.getSystemInfo()
+          </Button>
+          {systemInfo ? (
+            <View className="p-2.5 bg-gray-100 rounded text-xs text-gray-700">
+              <Text>{systemInfo}</Text>
+            </View>
+          ) : null}
+          <Button
+            className="w-full m-0 py-2 text-sm font-medium bg-amber-600 text-white rounded-lg active:opacity-80"
+            onClick={handleTradePay}
+          >
+            Test Macle ma.tradePay()
+          </Button>
+        </View>
       </View>
 
-      {/* Navigation Section */}
-      <View className="card">
-        <Text className="card-title">4. Mini Program Navigation</Text>
-        <Button className="btn btn-primary" onClick={handleNavigate}>
-          Navigate to Detail Page
+      {/* Navigation */}
+      <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
+        <Text className="text-base font-bold text-gray-800 block mb-2">4. Mini Program Navigation</Text>
+        <Button
+          className="w-full m-0 py-2.5 text-sm font-semibold bg-indigo-600 text-white rounded-lg active:opacity-80 shadow-sm"
+          onClick={handleNavigate}
+        >
+          Navigate to Detail Page →
         </Button>
       </View>
     </View>
