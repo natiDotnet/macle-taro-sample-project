@@ -3,22 +3,24 @@ import { View, Text, Button, Input } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import './index.css'
 
+declare const ma: any
+
 export default function IndexPage() {
   const [count, setCount] = useState<number>(0)
   const [inputText, setInputText] = useState<string>('Hello Macle with Tailwind!')
   const [systemInfo, setSystemInfo] = useState<string>('')
   const [selectedTag, setSelectedTag] = useState<string>('Tailwind')
 
-  // Toast test
+  // Toast test (via Taro)
   const handleShowToast = () => {
     Taro.showToast({
-      title: 'Taro on Macle!',
+      title: 'Taro.showToast() Works!',
       icon: 'success',
       duration: 2000
     })
   }
 
-  // System info test
+  // System info test (via Taro)
   const handleGetSystemInfo = async () => {
     try {
       console.log('[DEBUG] calling Taro.getSystemInfo()...')
@@ -33,8 +35,8 @@ export default function IndexPage() {
     }
   }
 
-  // Macle TradePay test
-  const handleTradePay = () => {
+  // Macle TradePay test (via Taro)
+  const handleTaroTradePay = () => {
     if (typeof (Taro as any).tradePay === 'function') {
       (Taro as any).tradePay({
         tradeNO: '20261104SAMPLE001',
@@ -49,6 +51,48 @@ export default function IndexPage() {
       })
     } else {
       Taro.showToast({ title: 'tradePay not available', icon: 'none' })
+    }
+  }
+
+  // Direct native ma.showToast test
+  const handleNativeShowToast = () => {
+    try {
+      if (typeof ma !== 'undefined' && typeof ma.showToast === 'function') {
+        ma.showToast({
+          title: 'Direct ma.showToast() Works!',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        Taro.showToast({ title: 'ma object not found', icon: 'none' })
+      }
+    } catch (e: any) {
+      console.error('[DEBUG] ma.showToast error:', e)
+      Taro.showToast({ title: 'ma.showToast error: ' + (e?.message || e), icon: 'none' })
+    }
+  }
+
+  // Direct native ma.tradePay test
+  const handleNativeTradePay = () => {
+    try {
+      if (typeof ma !== 'undefined' && typeof ma.tradePay === 'function') {
+        ma.tradePay({
+          tradeNO: '20261105NATIVE001',
+          orderStr: 'tradeNo=20261105NATIVE001',
+          sign: 'DEMO_NATIVE_SIGN',
+          success: (res: any) => {
+            Taro.showToast({ title: 'ma.tradePay Success: ' + JSON.stringify(res), icon: 'success' })
+          },
+          fail: (err: any) => {
+            Taro.showToast({ title: 'ma.tradePay Fail: ' + (err?.errMsg || JSON.stringify(err)), icon: 'none' })
+          }
+        })
+      } else {
+        Taro.showToast({ title: 'native ma.tradePay not available', icon: 'none' })
+      }
+    } catch (e: any) {
+      console.error('[DEBUG] native ma.tradePay error:', e)
+      Taro.showToast({ title: 'ma.tradePay error: ' + (e?.message || e), icon: 'none' })
     }
   }
 
@@ -111,10 +155,11 @@ export default function IndexPage() {
         </View>
       </View>
 
-      {/* Native APIs */}
+      {/* Taro & Native Macle APIs */}
       <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
-        <Text className="text-base font-bold text-gray-800 block mb-2">3. Native Macle APIs (ma.* Bridge)</Text>
+        <Text className="text-base font-bold text-gray-800 block mb-2">3. Taro & Native Macle APIs (ma.* Bridge)</Text>
         <View className="flex flex-col gap-2">
+          {/* Taro API Tests */}
           <Button
             className="w-full m-0 py-2 text-sm font-medium bg-slate-800 text-white rounded-lg active:opacity-80"
             onClick={handleShowToast}
@@ -133,10 +178,24 @@ export default function IndexPage() {
             </View>
           ) : null}
           <Button
-            className="w-full m-0 py-2 text-sm font-medium bg-amber-600 text-white rounded-lg active:opacity-80"
-            onClick={handleTradePay}
+            className="w-full m-0 py-2 text-sm font-medium bg-blue-700 text-white rounded-lg active:opacity-80"
+            onClick={handleTaroTradePay}
           >
-            Test Macle ma.tradePay()
+            Test Taro.tradePay()
+          </Button>
+
+          {/* Direct Native ma.* Tests */}
+          <Button
+            className="w-full m-0 py-2 text-sm font-medium bg-emerald-600 text-white rounded-lg active:opacity-80"
+            onClick={handleNativeShowToast}
+          >
+            Test Native ma.showToast()
+          </Button>
+          <Button
+            className="w-full m-0 py-2 text-sm font-medium bg-amber-600 text-white rounded-lg active:opacity-80"
+            onClick={handleNativeTradePay}
+          >
+            Test Native ma.tradePay()
           </Button>
         </View>
       </View>

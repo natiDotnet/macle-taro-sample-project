@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Button } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import {
+  MauiButton,
+  MauiCell,
+  MauiCellGroup,
+  MauiTag,
+  MauiIcon,
+  MauiDivider,
+  MauiSwitch
+} from '@tarojs/plugin-platform-macle/dist/components-react'
 
 export default function DetailPage() {
   const [likes, setLikes] = useState<number>(42)
+  const [mauiClicks, setMauiClicks] = useState<number>(0)
+  const [switchChecked, setSwitchChecked] = useState<boolean>(true)
   const [params, setParams] = useState<Record<string, string>>({
     id: 'MACLE-2026',
     title: 'Taro Detail Showcase',
@@ -97,6 +108,93 @@ export default function DetailPage() {
           >
             ← Back to Index Page
           </Button>
+        </View>
+      </View>
+
+      {/* MAUI Component Library Showcase */}
+      <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-blue-100">
+        <View className="flex flex-row items-center justify-between mb-2">
+          <Text className="text-base font-bold text-blue-900 block">4. Native MAUI Components</Text>
+          <MauiTag type="primary">v25.9.0</MauiTag>
+        </View>
+        <Text className="text-xs text-gray-500 block mb-4">
+          Rendered via @tarojs/plugin-platform-macle native MAUI integration with two-way bindings.
+        </Text>
+
+        {/* MAUI Tags */}
+        <View className="mb-4">
+          <Text className="text-xs font-semibold text-gray-700 block mb-2">Tags:</Text>
+          <View className="flex flex-row flex-wrap gap-2">
+            <MauiTag type="primary">Primary</MauiTag>
+            <MauiTag type="success">Success</MauiTag>
+            <MauiTag type="warning">Warning</MauiTag>
+            <MauiTag type="danger">Danger</MauiTag>
+            <MauiTag plain type="primary">Plain</MauiTag>
+          </View>
+        </View>
+
+        <MauiDivider />
+
+        {/* MAUI Buttons */}
+        <View className="mb-4">
+          <Text className="text-xs font-semibold text-gray-700 block mb-2">Buttons (Clicked: {mauiClicks}):</Text>
+          <View className="flex flex-col gap-2">
+            <MauiButton
+              type="primary"
+              block
+              onClick={() => {
+                setMauiClicks(c => c + 1)
+                Taro.showToast({ title: 'MAUI Button Clicked!', icon: 'none' })
+              }}
+            >
+              Primary MAUI Button
+            </MauiButton>
+
+            <View className="flex flex-row gap-2">
+              <MauiButton
+                type="info"
+                size="small"
+                onClick={() => setMauiClicks(c => c + 1)}
+              >
+                Info Small
+              </MauiButton>
+              <MauiButton
+                type="warning"
+                size="small"
+                onClick={() => setMauiClicks(c => c + 1)}
+              >
+                Warning Small
+              </MauiButton>
+              <MauiButton
+                type="danger"
+                size="small"
+                plain
+                onClick={() => setMauiClicks(c => c + 1)}
+              >
+                Danger Plain
+              </MauiButton>
+            </View>
+          </View>
+        </View>
+
+        <MauiDivider />
+
+        {/* MAUI Cell Group */}
+        <View className="mb-2">
+          <Text className="text-xs font-semibold text-gray-700 block mb-2">Cell Group:</Text>
+          <MauiCellGroup>
+            <MauiCell title="MAUI Platform" value="Active" />
+            <MauiCell title="Two-Way Event Binding" value="Verified" />
+            <MauiCell
+              title="Interactive Switch"
+              onClick={() => setSwitchChecked(!switchChecked)}
+            >
+              <MauiSwitch
+                checked={switchChecked}
+                onChange={(e: any) => setSwitchChecked(e.detail)}
+              />
+            </MauiCell>
+          </MauiCellGroup>
         </View>
       </View>
     </View>

@@ -1,3 +1,28 @@
+button, ma-button {
+  border: none;
+  outline: none;
+}
+ma-button.bg-blue-600 {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+ma-button.bg-indigo-600 {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+ma-button.bg-slate-800 {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+ma-button.bg-amber-600 {
+  background-color: #d97706 !important;
+  color: #ffffff !important;
+}
+ma-button.bg-gray-900 {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+}
+
 .index-container {
   padding: 30rpx;
   display: flex;
