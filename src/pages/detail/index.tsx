@@ -8,13 +8,17 @@ import {
   MauiTag,
   MauiIcon,
   MauiDivider,
-  MauiSwitch
+  MauiSwitch,
+  MauiModal,
+  MauiList,
+  MauiListItem
 } from '@tarojs/plugin-platform-macle/dist/components-react'
 
 export default function DetailPage() {
   const [likes, setLikes] = useState<number>(42)
   const [mauiClicks, setMauiClicks] = useState<number>(0)
   const [switchChecked, setSwitchChecked] = useState<boolean>(true)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [params, setParams] = useState<Record<string, string>>({
     id: 'MACLE-2026',
     title: 'Taro Detail Showcase',
@@ -115,7 +119,7 @@ export default function DetailPage() {
       <View className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-blue-100">
         <View className="flex flex-row items-center justify-between mb-2">
           <Text className="text-base font-bold text-blue-900 block">4. Native MAUI Components</Text>
-          <MauiTag type="primary">v25.9.0</MauiTag>
+          <MauiTag type="primary">v26.6.0</MauiTag>
         </View>
         <Text className="text-xs text-gray-500 block mb-4">
           Rendered via @tarojs/plugin-platform-macle native MAUI integration with two-way bindings.
@@ -180,7 +184,7 @@ export default function DetailPage() {
         <MauiDivider />
 
         {/* MAUI Cell Group */}
-        <View className="mb-2">
+        <View className="mb-4">
           <Text className="text-xs font-semibold text-gray-700 block mb-2">Cell Group:</Text>
           <MauiCellGroup>
             <MauiCell title="MAUI Platform" value="Active" />
@@ -196,6 +200,38 @@ export default function DetailPage() {
             </MauiCell>
           </MauiCellGroup>
         </View>
+
+        <MauiDivider />
+
+        {/* New 26.6.0 MAUI List & ListItem */}
+        <View className="mb-4">
+          <Text className="text-xs font-semibold text-gray-700 block mb-2">MAUI List & ListItem (v26.6.0):</Text>
+          <MauiList header="DevSuite 26.6.0 Features" footer="Synced with official LG0001" radius>
+            <MauiListItem title="Runtime Sync" brief="Webpack hooks & Custom APIs" arrow="right" extra="Active" />
+            <MauiListItem
+              title="Modal Component"
+              brief="Click to preview native modal"
+              arrow="right"
+              extra="Open Modal"
+              onClick={() => setModalVisible(true)}
+            />
+          </MauiList>
+        </View>
+
+        {/* New 26.6.0 MAUI Modal */}
+        <MauiModal
+          visible={modalVisible}
+          title="MAUI 26.6.0 Modal"
+          content="This modal is rendered using the new native MAUI 26.6.0 modal component integrated into Taro platform plugin."
+          primaryButtonText="Confirm"
+          cancelButtonText="Close"
+          onClose={() => setModalVisible(false)}
+          onPrimaryButtonTap={() => {
+            setModalVisible(false)
+            Taro.showToast({ title: 'Modal Confirmed!', icon: 'success' })
+          }}
+          onCancelButtonTap={() => setModalVisible(false)}
+        />
       </View>
     </View>
   )

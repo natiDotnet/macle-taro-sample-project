@@ -22,3 +22,4 @@ declare namespace Taro {
     cancelTimer?: (options: any) => Promise<any>
   }
 }
+
