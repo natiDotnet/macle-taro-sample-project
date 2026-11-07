@@ -12,7 +12,7 @@ import {
   MauiModal,
   MauiList,
   MauiListItem
-} from '@tarojs/plugin-platform-macle/dist/components-react'
+} from '@macle-community/taro-plugin-macle/components-react'
 
 export default function DetailPage() {
   const [likes, setLikes] = useState<number>(42)
@@ -122,7 +122,7 @@ export default function DetailPage() {
           <MauiTag type="primary">v26.6.0</MauiTag>
         </View>
         <Text className="text-xs text-gray-500 block mb-4">
-          Rendered via @tarojs/plugin-platform-macle native MAUI integration with two-way bindings.
+          Rendered via @macle-community/taro-plugin-macle native MAUI integration with two-way bindings.
         </Text>
 
         {/* MAUI Tags */}
